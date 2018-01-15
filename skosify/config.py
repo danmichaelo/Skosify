@@ -4,7 +4,7 @@
 import logging
 import sys
 import argparse
-from rdflib import URIRef, Namespace, RDF, RDFS
+from rdflib.namespace import URIRef, Namespace, RDF, RDFS, OWL, SKOS, DC, DCTERMS, XSD
 
 # import for both Python 2 and Python 3
 try:
@@ -16,11 +16,11 @@ except ImportError:
 DEFAULT_NAMESPACES = {
     'rdf': RDF,
     'rdfs': RDFS,
-    'owl': Namespace("http://www.w3.org/2002/07/owl#"),
-    'skos': Namespace("http://www.w3.org/2004/02/skos/core#"),
-    'dc': Namespace("http://purl.org/dc/elements/1.1/"),
-    'dct': Namespace("http://purl.org/dc/terms/"),
-    'xsd': Namespace("http://www.w3.org/2001/XMLSchema#"),
+    'owl': OWL,
+    'skos': SKOS,
+    'dc': DC,
+    'dct': DCTERMS,
+    'xsd': XSD,
 }
 
 
