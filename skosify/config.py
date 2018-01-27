@@ -73,6 +73,15 @@ class Config(object):
 
         cfgparser = ConfigParser()
 
+        # Add empty defaults to avoid NoSectionError
+        cfgparser.read_dict({
+            'namespaces': {},
+            'types': {},
+            'literals': {},
+            'relations': {},
+            'options': {},
+        })
+
         # force case-sensitive handling of option names
         cfgparser.optionxform = str
 
