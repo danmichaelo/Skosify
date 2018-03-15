@@ -73,12 +73,24 @@ class Config(object):
 
         cfgparser = ConfigParser()
 
+        # Add empty defaults to avoid NoSectionError
+        cfgparser.read_dict({
+            'namespaces': {},
+            'types': {},
+            'literals': {},
+            'relations': {},
+            'options': {},
+        })
+
         # force case-sensitive handling of option names
         cfgparser.optionxform = str
 
         # complains if open failed
         with open(filename) as fp:
-            cfgparser.readfp(fp)
+            if sys.version_info >= (3, 2):
+                cfgparser.read_file(fp)  # Added in Python 3.2
+            else:
+                cfgparser.readfp(fp)  # Deprecated since Python 3.2
 
         # parse namespaces from configuration file
         for prefix, uri in cfgparser.items('namespaces'):
