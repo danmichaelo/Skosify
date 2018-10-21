@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Generic RDF utility methods to parse and serialize RDF."""
 
+from io import BytesIO
 import logging
 import sys
 
@@ -40,9 +41,21 @@ def read_rdf(sources, infmt):
     return rdf
 
 
+class UnicodeStreamWrapper(BytesIO):
+    def __init__(self, stream):
+        super(UnicodeStreamWrapper, self).__init__()
+        self.stream = stream
+
+    def write(self, buf):
+        self.stream.write(buf.decode('utf-8'))
+
+
 def write_rdf(rdf, filename, fmt):
     if filename == '-':
-        out = sys.stdout
+        if sys.version_info > (3, 0):
+            out = UnicodeStreamWrapper(sys.stdout)
+        else:
+            out = sys.stdout
     else:
         out = open(filename, 'wb')
 
